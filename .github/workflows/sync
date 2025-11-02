@@ -1,0 +1,19 @@
+name: Sync
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          git config --global pull.rebase merges
+          git pull --unshallow
+          git remote add upstream https://github.com/PlayPro/CoreProtect.git
+          git fetch upstream
+          git checkout master
+          git merge --no-edit upstream/master
+          git push origin master
