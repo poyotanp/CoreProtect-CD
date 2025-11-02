@@ -32,7 +32,8 @@ jobs:
       - name: Build
         run: mvn -B verify
 
+      - run: echo "filename=$(basename $(ls target/CoreProtect-*.jar))" >> $GITHUB_ENV
       - uses: actions/upload-artifact@v4
         with:
-          name: coreprotect-jar
-          path: target/*.jar
+          name: ${{ env.filename }}
+          path: target/${{ env.filename }}
